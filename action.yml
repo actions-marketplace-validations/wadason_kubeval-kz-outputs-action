@@ -1,0 +1,24 @@
+name: 'kubeval-kz-outputs-action'
+description: 'kustomize build overlays/${env} | kubeval'
+author: 'wadason'
+inputs:
+  pathList:
+    description: 'Comma-separated list of directiries path you want to check. | ex. k8s/apps, k8s/guestbook'
+    required: true
+  envList:
+    description: 'Comma-separated list of env under overlays. | ex. stg, prd or staging, production'
+    required: true
+  kustomizeVersion:
+    description: 'Kustomize version'
+    default: 3.5.5
+  kubevalVersion:
+    description: 'Kubeval version'
+    default: 0.15.0
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.envList }}
+    - ${{ inputs.pathList }}
+    - ${{ inputs.kustomizeVersion }}
+    - ${{ inputs.kubevalVersion }}
